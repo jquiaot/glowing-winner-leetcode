@@ -19,10 +19,12 @@ class Solution:
         Space: O(1) - no additional space needed
 
         >>> s = Solution()
-        >>> s.twoSum1([2, 7, 11, 15], 9)
+        >>> sorted(s.twoSum1([2, 7, 11, 15], 9))
         [0, 1]
-        >>> s.twoSum1([3, 2, 4], 6)
+        >>> sorted(s.twoSum1([3, 2, 4], 6))
         [1, 2]
+        >>> sorted(s.twoSum1([3, 3], 6))
+        [0, 1]
         """
         for i in range(len(nums)):
             for j in range(i + 1, len(nums)):
@@ -47,10 +49,12 @@ class Solution:
         Space: O(n) for list of tuples
 
         >>> s = Solution()
-        >>> s.twoSum2([2, 7, 11, 15], 9)
+        >>> sorted(s.twoSum2([2, 7, 11, 15], 9))
         [0, 1]
-        >>> s.twoSum2([3, 2, 4], 6)
+        >>> sorted(s.twoSum2([3, 2, 4], 6))
         [1, 2]
+        >>> sorted(s.twoSum2([3, 3], 6))
+        [0, 1]
         """
         tuples = []
         for i in range(len(nums)):
@@ -60,29 +64,38 @@ class Solution:
 
         for elt in tuples:
             # binary search to find elt
-            foundElt = self.binarySearch(tuples, target - elt[0])
+            foundElt = self.binarySearch(tuples, [target - elt[0], elt[1]])
             if foundElt is not None:
                 return [elt[1], foundElt[1]]
         
         return None
 
-    def binarySearch(self, tuples: list[tuple[int, int]], target: int) -> tuple[int, int]:
+    def binarySearch(self, tuples: list[tuple[int, int]], targetTuple: tuple[int, int]) -> tuple[int, int]:
         """
-        Binary search on tuples.
+        Binary search on tuples. Assumes tuples is sorted on the first element.
         """
         bottom = 0
         top = len(tuples) - 1
         mid = (top - bottom) // 2
         while bottom <= top:
             mid = (top + bottom) // 2
-            if tuples[mid][0] == target:
-                return tuples[mid]
-            elif tuples[mid][0] > target:
+            if tuples[mid][0] == targetTuple[0]:
+                break
+            elif tuples[mid][0] > targetTuple[0]:
                 top = mid - 1
             else:
                 bottom = mid + 1
-        return None
 
+        if tuples[mid][0] == targetTuple[0]:
+            # test indexes
+            if tuples[mid][1] != targetTuple[1]:
+                return tuples[mid]
+            elif mid > 0 and tuples[mid - 1][0] == targetTuple[0]:
+                return tuples[mid - 1]
+            elif mid < len(tuples) - 2 and tuples[mid + 1][0] == targetTuple[0]:
+                return tuples[mid + 1]
+        else:
+            return None
 
 if __name__ == '__main__':
     import doctest
