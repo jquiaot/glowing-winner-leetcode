@@ -39,6 +39,18 @@ Constraints:
 class Solution:
     def pivotInteger(self, n: int) -> int:
         """
+        >>> s = Solution()
+        >>> s.pivotInteger(8)
+        6
+        >>> s.pivotInteger(1)
+        1
+        >>> s.pivotInteger(4)
+        -1
+        """
+        return self.pivotInteger2(n)
+
+    def pivotInteger1(self, n: int) -> int:
+        """
         Sum of all values from 1..n = (n*(n+1))/2
 
         Sum of all values from 1..k and k..n = (n*(n+1))/2 + k
@@ -60,14 +72,6 @@ class Solution:
              discover no possible pivot
         Space:
         - => O(1) to maintain front and end/back sums and pivot
-
-        >>> s = Solution()
-        >>> s.pivotInteger(8)
-        6
-        >>> s.pivotInteger(1)
-        1
-        >>> s.pivotInteger(4)
-        -1
         """
         frontSum = (n * (n + 1)) // 2
         endSum = 0
@@ -83,6 +87,45 @@ class Solution:
                 return pivot
             else:
                 return -1
+
+    def pivotInteger2(self, n: int) -> int:
+        """
+        Two-pointer solution:
+        - Maintain two pointers, to front and end
+        - Maintain sums for each end
+        - While pointers do not overlap
+          - If values are unequal, add to smaller end's total and advance
+            that end's value
+
+        Time:
+        - => O(n) traverse values from 1..n at most once
+        Space:
+
+        - => O(1) for maintaining current values from each and, and current
+             sums from each end
+        """
+        frontValue = 1
+        endValue = n
+
+        frontSum = 0
+        endSum = 0
+
+        while frontValue < endValue:
+            if frontSum < endSum:
+                frontSum += frontValue
+                frontValue += 1
+            elif frontSum > endSum:
+                endSum += endValue
+                endValue -= 1
+            else:
+                frontSum += frontValue
+                frontValue += 1
+                endSum += endValue
+                endValue -= 1
+        if frontSum == endSum:
+            return frontValue
+        else:
+            return -1
 
 if __name__ == '__main__':
     import doctest
