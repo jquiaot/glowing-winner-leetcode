@@ -8,7 +8,8 @@ You can return the answer in any order.
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         # return self.twoSum1(nums, target)
-        return self.twoSum2(nums, target)
+        # return self.twoSum2(nums, target)
+        return self.twoSumWithDict(nums, target)
 
     def twoSum1(self, nums: list[int], target: int) -> list[int]:
         """
@@ -96,6 +97,35 @@ class Solution:
                 return tuples[mid + 1]
         else:
             return None
+
+    def twoSumWithDict(self, nums: list[int], target: int) -> list[int]:
+        """
+        Create a dictionary mapping from value to its corresponding
+        index in nums. For each value in nums, look up in dictionary
+        the balance (value that is the difference of target and the
+        ith value in nums). If it exists, return the pair of indices.
+
+        Time:
+        - let n = len(nums)
+        - O(n) to generate dict
+        - O(n) to iterate through nums, and for each iteration O(1) 
+          dict lookup to check for its counterpart
+        - => O(n)
+
+        Space:
+        - let n = len(nums)
+        - O(n) dict mapping value to its index
+        => O(n)
+        """
+        m = dict()
+        for i in range(len(nums)):
+            m[nums[i]] = i
+        
+        for i in range(len(nums)):
+            balance = target - nums[i]
+            if balance in m and m[balance] != i:
+                return [i, m[balance]]
+        return [-1, -1]
 
 if __name__ == '__main__':
     import doctest
