@@ -40,9 +40,15 @@ public class LC0088MergeSortedArray {
 	    }
 	    k--;
 	}
+	/*
+	System.out.println(String.format("nums1=" + Arrays.toString(nums1) + "," +
+					 "nums2=" + Arrays.toString(nums2) + "," +
+					 "i=" + i + ", j=" + j + ", k=" + k));
+	*/
+
 	// nums1 exhausted but nums2 isn't, so just copy over nums2 values
 	// into remaining slots of nums1
-	if (j > 0) {
+	if (j >= 0) {
 	    while (j >= 0) {
 		nums1[k] = nums2[j];
 		k--;
@@ -64,6 +70,9 @@ public class LC0088MergeSortedArray {
 	test(new int[] { 0 }, 0,
 	     new int[] { 1 }, 1,
 	     new int[] { 1 });
+	test(new int[] { 2, 0 }, 1,
+	     new int[] { 1 }, 1,
+	     new int[] { 1, 2 });
     }
 
     private static void test(int[] nums1, int m, int[] nums2, int n,
