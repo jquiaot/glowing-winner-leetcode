@@ -10,7 +10,7 @@ Depending on bandwidth and my abilities, I've attempted to supply a
 discussion of the solution approach, and time and space complexity.
 However, I can't guarantee correctness (i.e., time/space bounds might not
 be tight enough, or descriptive enough, or simply wrong). (With extreme
-apologies to my 6.018 professors and recitation instructors, I know you
+apologies to my 6.046J professors and recitation instructors, I know you
 tried to teach me all of this, and I can't thank you enough for your
 instruction.)
 
