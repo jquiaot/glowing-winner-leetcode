@@ -1,8 +1,8 @@
 from collections import deque
 from typing import Optional
 
-# Some useful utility methods since TreeNode seems to appear quite frequently
-# in Leetcode problems.
+# Some useful utility methods since TreeNode seems to appear quite
+# frequently in Leetcode problems.
 
 class TreeNode:
     def __init__(self, val = 0, left = None, right = None):
